@@ -2,7 +2,6 @@
 	heap
 	This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -95,7 +94,7 @@ where
         if self.count == 0 { return None; }
         let root = self.items.swap_remove(1);
         self.count -= 1;
-        let mute idx = 1;
+        let mut idx = 1;
         while self.children_present(idx) {
             let child = self.smallest_child_idx(idx);
             if !(self.comparator)(&self.items[child], &self.items[idx]) { break; }

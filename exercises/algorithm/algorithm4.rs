@@ -3,7 +3,6 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -51,7 +50,7 @@ where
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
         match self.root.as_mut() {
-            Some(root) => root.insert(value);
+            Some(root) => root.insert(value),
             None => self.root = Some(Box::new(TreeNode::new(value))),
         }
     }
@@ -64,7 +63,7 @@ where
                 Ordering::Less => node.left.as_deref(),
                 Ordering::Greater => node.right.as_deref(),
                 Ordering::Equal => return true,
-            }
+            };
         }
         false
     }
@@ -85,7 +84,6 @@ where
             Some(node) => node.insert(value),
             None => *child = Some(Box::new(TreeNode::new(value))),
         }
-
     }
 }
 
@@ -141,5 +139,4 @@ mod tests {
         }
     }
 }
-
 

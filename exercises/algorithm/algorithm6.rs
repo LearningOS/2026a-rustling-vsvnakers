@@ -3,7 +3,6 @@
 	This problem requires you to implement a basic DFS traversal
 */
 
-// I AM NOT DONE
 use std::collections::HashSet;
 
 struct Graph {
@@ -79,4 +78,3 @@ mod tests {
         assert_eq!(visit_order_disconnected, vec![3, 4]);
     }
 }
-

@@ -2,7 +2,6 @@
 	queue
 	This question requires you to use queues to implement the functionality of the stac
 */
-// I AM NOT DONE
 
 #[derive(Debug)]
 pub struct Queue<T> {
@@ -79,7 +78,8 @@ impl<T> myStack<T> {
         Ok(result)
     }
     pub fn is_empty(&self) -> bool {
-		self.q1.is_empty();
+		//TODO
+        self.q1.is_empty()
     }
 }
 

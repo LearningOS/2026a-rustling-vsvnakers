@@ -6,7 +6,7 @@
 // I AM NOT DONE
 
 fn sort<T>(array: &mut [T]){
-	//TODO
+	array.sort();
 }
 #[cfg(test)]
 mod tests {

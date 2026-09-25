@@ -50,13 +50,23 @@ where
 
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
-        //TODO
+        match self.root.as_mut() {
+            Some(root) => root.insert(value);
+            None => self.root = Some(Box::new(TreeNode::new(value))),
+        }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
-        //TODO
-        true
+        let mut current = self.root.as_deref();
+        while let Some(node) = current {
+            current = match value.cmp(&node.value) {
+                Ordering::Less => node.left.as_deref(),
+                Ordering::Greater => node.right.as_deref(),
+                Ordering::Equal => return true,
+            }
+        }
+        false
     }
 }
 
@@ -66,7 +76,16 @@ where
 {
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
-        //TODO
+        let child = match value.cmp(&self.value) {
+            Ordering::Less => &mut self.left,
+            Ordering::Greater => &mut self.right,
+            Ordering::Equal => return,
+        };
+        match child {
+            Some(node) => node.insert(value),
+            None => *child = Some(Box::new(TreeNode::new(value))),
+        }
+
     }
 }
 
@@ -79,24 +98,24 @@ mod tests {
     fn test_insert_and_search() {
         let mut bst = BinarySearchTree::new();
 
-        
+
         assert_eq!(bst.search(1), false);
 
-        
+
         bst.insert(5);
         bst.insert(3);
         bst.insert(7);
         bst.insert(2);
         bst.insert(4);
 
-        
+
         assert_eq!(bst.search(5), true);
         assert_eq!(bst.search(3), true);
         assert_eq!(bst.search(7), true);
         assert_eq!(bst.search(2), true);
         assert_eq!(bst.search(4), true);
 
-        
+
         assert_eq!(bst.search(1), false);
         assert_eq!(bst.search(6), false);
     }
@@ -105,14 +124,14 @@ mod tests {
     fn test_insert_duplicate() {
         let mut bst = BinarySearchTree::new();
 
-        
+
         bst.insert(1);
         bst.insert(1);
 
-        
+
         assert_eq!(bst.search(1), true);
 
-        
+
         match bst.root {
             Some(ref node) => {
                 assert!(node.left.is_none());
@@ -121,6 +140,6 @@ mod tests {
             None => panic!("Root should not be None after insertion"),
         }
     }
-}    
+}
 
 

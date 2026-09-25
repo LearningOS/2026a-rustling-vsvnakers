@@ -69,14 +69,22 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self where T: Ord
 	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+		let (mut a, mut b) = (list_a.start, list_b.start);
+        let mut merged = Self::new();
+        while a.is_some() || b.is_some() {
+            let take_a = match (a, b) {
+                (Some(x), Some(y)) => unsafe { x.as_ref().val <= y.as_ref().val },
+                (Some(_), None) => true,
+                _ => false,
+            };
+            let head = if take_a { &mut a } else { &mut b };
+            let Node {val, next} = *unsafe {Box::from_raw(head.take().unwrap().as_ptr()) };
+            *head = next;
+            merged.add(val);
         }
+        merged
 	}
 }
 
@@ -135,7 +143,7 @@ mod tests {
 		let vec_a = vec![1,3,5,7];
 		let vec_b = vec![2,4,6,8];
 		let target_vec = vec![1,2,3,4,5,6,7,8];
-		
+
 		for i in 0..vec_a.len(){
 			list_a.add(vec_a[i]);
 		}
